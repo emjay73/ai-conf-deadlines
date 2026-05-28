@@ -1,0 +1,50 @@
+name: Update deadlines.ics
+
+on:
+  schedule:
+    # Daily at 03:00 UTC = 12:00 KST
+    - cron: '0 3 * * *'
+  workflow_dispatch:  # allow manual trigger
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install pyyaml
+
+      - name: Build deadlines.ics
+        run: python scripts/build_ics.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet docs/deadlines.ics; then
+            # Strip DTSTAMP lines before deciding — those change every run regardless
+            CHANGED=$(git diff docs/deadlines.ics | grep -E '^[+-]' | grep -vE '^[+-]{3}|^[+-]DTSTAMP|^[+-]X-WR-CALDESC' | wc -l)
+            if [ "$CHANGED" -gt 0 ]; then
+              git add docs/deadlines.ics
+              git commit -m "Update deadlines.ics ($(date -u +%Y-%m-%d))"
+              git push
+            else
+              echo "Only DTSTAMP changes — skipping commit"
+              git checkout docs/deadlines.ics
+            fi
+          else
+            echo "No changes"
+          fi
