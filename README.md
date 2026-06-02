@@ -6,7 +6,8 @@ AI/CV/Graphics 학회 제출 마감 자동 캘린더.
 
 ## 관심 학회
 
-CVPR, ICCV, ECCV, NeurIPS, ICLR, ICML, SIGGRAPH, SIGGRAPH Asia, AAAI, WACV, 3DV
+- **AI/CV/Graphics**: CVPR, ICCV(홀수년), ECCV(짝수년), NeurIPS, ICLR, ICML, SIGGRAPH, SIGGRAPH Asia, AAAI, WACV, 3DV
+- **Robotics**: ICRA, IROS, RSS, CoRL
 
 ## 포함하는 마감 종류
 

@@ -35,6 +35,20 @@ INTEREST = {
     "siggraph": "SIGGRAPH",
     "aaai":     "AAAI",
     "wacv":     "WACV",
+    # Robotics
+    "icra":     "ICRA",
+    "iros":     "IROS",
+    "rss":      "RSS",
+    "corl":     "CoRL",
+}
+
+# Conferences held only in even or odd years. Tentative next-cycle generation
+# jumps by 2 years for these instead of 1.
+#   ECCV: even years (2024, 2026, 2028, ...)
+#   ICCV: odd  years (2025, 2027, 2029, ...)
+YEAR_PARITY = {
+    "eccv": 0,
+    "iccv": 1,
 }
 
 # Conferences NOT covered by ai-deadlines repo — hardcoded with their cadence.
@@ -253,16 +267,22 @@ def collect_from_ai_deadlines(now_utc: datetime):
             continue
         pattern_year = pattern_cycle.get("year")
 
-        # Candidate cycles to generate tentative entries for: existing-but-empty + next year
+        parity = YEAR_PARITY.get(conf_id)
+        cycle_step = 2 if parity is not None else 1  # ECCV/ICCV: biennial
+
+        # Candidate cycles to generate tentative entries for: existing-but-empty + next cycle
         candidate_years = set()
         for y, c in years_present.items():
             if not c.get("deadlines"):
                 candidate_years.add(y)
-        # Always also try next year after the latest known cycle
+        # Always also try the next cycle after the latest known one
         latest_year = data[-1].get("year")
-        candidate_years.add(latest_year + 1)
+        candidate_years.add(latest_year + cycle_step)
         # Filter: only future
         candidate_years = {y for y in candidate_years if y > pattern_year}
+        # Filter: respect year parity for biennial confs
+        if parity is not None:
+            candidate_years = {y for y in candidate_years if y % 2 == parity}
 
         for target_year in sorted(candidate_years):
             year_offset = target_year - pattern_year
