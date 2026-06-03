@@ -1,17 +1,24 @@
 """
-Build deadlines.ics from huggingface/ai-deadlines repo + tentative estimates.
+Build deadlines.ics from huggingface/ai-deadlines repo + official sites + estimates.
 
 Strategy:
 1. Fetch YAML files for confirmed conferences from huggingface/ai-deadlines.
 2. For each interest conference, extract deadlines of type {abstract, paper, supplementary, submission}.
 3. Only include deadlines AFTER today.
-4. For each interest conference, also generate a tentative entry for the NEXT cycle
-   based on the most recent previous edition's pattern (offset by 1 year), if no
-   confirmed entry for that cycle exists yet.
-5. Mark tentative entries with "(tentative)" suffix and include the source pattern in DESCRIPTION.
+4. For the NEXT cycle (not yet in upstream), HYBRID-observe the conference's
+   official page (OFFICIAL_SOURCES): a parsed date within SANITY_WINDOW_DAYS of
+   the +1-cycle estimate is trusted (confirmed); otherwise fall back to the
+   pattern estimate, marked "(tentative)".
+5. Every deadline is emitted as a submission-WINDOW event spanning [start, deadline]:
+   start = official submission-open date when known, else deadline − 7 days
+   (estimated). Reminders are anchored to the deadline (RELATED=END).
+6. When the official page exposes an author-registration open date, an extra
+   "Author registration" window (reg-open → abstract deadline) is emitted.
 """
 
 import hashlib
+import html as htmllib
+import re
 import sys
 import urllib.request
 import urllib.error
@@ -78,6 +85,92 @@ EXTRA_CONFS = {
 }
 
 DEADLINE_TYPES = {"abstract", "paper", "submission", "supplementary", "registration"}
+
+# ---------------------------------------------------------------------------
+# Official-site sources (hybrid scraper)
+# ---------------------------------------------------------------------------
+# For a cycle not yet in the upstream ai-deadlines repo, observe the conference's
+# own page directly. `url(year)` builds the next-cycle URL from the conf's
+# pattern; the page is fetched and run through a generic heuristic parser
+# (date + nearby keyword), with an optional per-conf `parser` override. A parsed
+# date is only TRUSTED (emitted as confirmed) if it lands within
+# SANITY_WINDOW_DAYS of the pattern-based +1-cycle estimate; otherwise we keep
+# the tentative estimate. This caps the blast radius of a misparse — a wildly
+# wrong scrape can never silently push a confirmed-looking date to the calendar.
+#
+# Keyed by conf_id (same key space as INTEREST / YEAR_PARITY).
+#   url     — lambda year → official schedule URL for that cycle.
+#   layout  — "label_first" (label then date, e.g. "Abstract deadline: May 4")
+#             or "date_first" (date then label, AAAI's WordPress table).
+#             Default "label_first". Every parsed source below is verified
+#             against its live page in /tmp before being added here.
+OFFICIAL_SOURCES = {
+    "aaai": {
+        # https://aaai.org/conference/aaai/aaai-27/  (NN = year - 2000)
+        "url": lambda year: f"https://aaai.org/conference/aaai/aaai-{year % 100:02d}/",
+        "layout": "date_first",
+    },
+    # *.cc platform — "Label: Date" call-for-papers pages.
+    "neurips": {"url": lambda year: f"https://neurips.cc/Conferences/{year}/CallForPapers"},
+    "icml":    {"url": lambda year: f"https://icml.cc/Conferences/{year}/CallForPapers"},
+    # ICLR deliberately NOT added: its CFP lists deadlines as bare "Sep 19" with
+    # no year, and the real deadline falls in the conference's PRIOR calendar
+    # year — the generic parser can't infer that, so it could never pass the
+    # sanity check anyway. Left to the tentative estimate.
+    # thecvf / ecva — "Label Date" Dates pages.
+    "cvpr":    {"url": lambda year: f"https://cvpr.thecvf.com/Conferences/{year}/Dates"},
+    "iccv":    {"url": lambda year: f"https://iccv.thecvf.com/Conferences/{year}/Dates"},
+    "eccv":    {"url": lambda year: f"https://eccv.ecva.net/Conferences/{year}/Dates"},
+}
+
+# A parsed official date must be within this many days of the +1-cycle estimate
+# to be trusted. Conferences drift a few weeks year to year; 75d is generous
+# enough to allow real drift while rejecting gross misparses.
+SANITY_WINDOW_DAYS = 75
+
+# Some conf sites (aaai.org) 403 the default Python urllib User-Agent.
+_BROWSER_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+_MONTHS = {'jan': 1, 'january': 1, 'feb': 2, 'february': 2, 'mar': 3, 'march': 3,
+           'apr': 4, 'april': 4, 'may': 5, 'jun': 6, 'june': 6, 'jul': 7, 'july': 7,
+           'aug': 8, 'august': 8, 'sep': 9, 'sept': 9, 'september': 9,
+           'oct': 10, 'october': 10, 'nov': 11, 'november': 11, 'dec': 12, 'december': 12}
+
+# "Month DD[st|nd|rd|th][, YYYY | 'YY]" — handles full/abbr months, ordinals,
+# 4-digit / apostrophe-2-digit / absent years (e.g. "May 4, 2026", "Nov 07 '25",
+# "March 3rd, 2025", "Sep 19").
+_DATE_RE = re.compile(
+    r"\b(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|"
+    r"aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
+    r"\s+(\d{1,2})(?:st|nd|rd|th)?(?:\s*,?\s*'?(\d{2,4})\b)?", re.I)
+
+# deadline keyword (lowercased substring) → (dl_type, short_label). Ordered:
+# most specific first; first matching rule per dl_type wins. Covers the label
+# vocab of AAAI / NeurIPS / ICML / CVPR / ICCV / ECCV (all verified live).
+_KEYWORD_RULES = [
+    ("abstract",                   ("abstract", "Abstract")),
+    ("paper registration",         ("abstract", "Abstract")),    # ICCV/ECCV first deadline
+    ("full paper",                 ("paper", "Paper")),          # ".cc" / AAAI "full papers due"
+    ("paper submission deadline",  ("paper", "Paper")),          # CVPR
+    ("main conference submission", ("paper", "Paper")),          # ECCV
+    ("submission and supplementary", ("paper", "Paper")),        # ICCV combined line
+    ("supplementary material",     ("supplementary", "Supplementary")),
+    ("supplemental material",      ("supplementary", "Supplementary")),
+]
+
+# Contexts that mean a nearby date is NOT a submission deadline.
+_NEG_CONTEXT = ("opens", "open for", "notification", "feedback", "reviews",
+                "rebuttal", "decision", "decisions", "camera", "acceptance",
+                "early registration", "cancellation", "final paper",
+                "final version", "results released", "job board", "careers")
+
+# Max chars allowed between a keyword and the date it classifies.
+_MAX_DATE_GAP = 70
 
 # Labels that indicate auxiliary tracks (not the main paper track) — skip these.
 SKIP_LABEL_PATTERNS = [
@@ -164,6 +257,175 @@ def parse_deadline_dt(date_str: str, tz: str) -> datetime:
     return d.replace(tzinfo=timezone.utc)
 
 
+def _html_to_text(html: str) -> str:
+    """Strip scripts/styles/tags and collapse whitespace (incl. &nbsp;)."""
+    text = re.sub(r"<(script|style)[\s\S]*?</\1>", " ", html, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = htmllib.unescape(text)
+    return re.sub(r"[\s ]+", " ", text).strip()
+
+
+def _detect_tz(window: str) -> str:
+    """Infer the timezone for a deadline from text near it. Default AoE."""
+    low = window.lower()
+    if "utc-12" in low or "aoe" in low or "anywhere on earth" in low:
+        return "AoE"
+    m = re.search(r"utc\s*([+-]\d{1,2})", low)
+    if m:
+        return "UTC" + m.group(1)
+    return "AoE"  # conference deadlines default to AoE
+
+
+def _all_dates(text: str, year):
+    """Every 'Month DD[, year]' in `text` as (start, end, year, month, day).
+    A bare date with no year on the page is assumed to be `year` (the target
+    cycle); dropped if `year` is None."""
+    out = []
+    for m in _DATE_RE.finditer(text):
+        mon = _MONTHS.get(m.group(1).lower())
+        if not mon:
+            continue
+        day = int(m.group(2))
+        if not 1 <= day <= 31:
+            continue
+        yr = m.group(3)
+        if yr:
+            yr = int(yr)
+            yr += 2000 if yr < 100 else 0
+        elif year:
+            yr = year
+        else:
+            continue
+        out.append((m.start(), m.end(), yr, mon, day))
+    return out
+
+
+def _pick_date(dates, ks, ke, layout):
+    """Date nearest to a keyword span [ks, ke], on the layout-preferred side
+    (label_first → date AFTER the keyword; date_first → date BEFORE it). Falls
+    back to the other side only if no same-side date is within _MAX_DATE_GAP."""
+    fwd = bwd = None
+    fd = bd = _MAX_DATE_GAP + 1
+    for d in dates:
+        ds, de = d[0], d[1]
+        if ds >= ke:
+            if ds - ke < fd:
+                fwd, fd = d, ds - ke
+        elif de <= ks:
+            if ks - de < bd:
+                bwd, bd = d, ks - de
+    if layout == "date_first":
+        primary, alt, pd, ad = bwd, fwd, bd, fd
+    else:
+        primary, alt, pd, ad = fwd, bwd, fd, bd
+    if primary is not None and pd <= _MAX_DATE_GAP:
+        return primary
+    if alt is not None and ad <= _MAX_DATE_GAP:
+        return alt
+    return None
+
+
+def heuristic_parse_deadlines(text: str, year=None, layout="label_first"):
+    """Generic extractor for conference schedule pages. For each deadline
+    keyword (_KEYWORD_RULES), classify the nearest date on the layout-preferred
+    side. Handles both "Label: Date" pages (label_first — NeurIPS/ICML/CVPR/
+    ICCV/ECCV) and AAAI's "Date Label" table (date_first). Also captures
+    submission-/registration-window OPEN dates under '__sub_open__' /
+    '__reg_open__'. Returns dl_type -> (short, "YYYY-MM-DD 23:59:59", tz), plus
+    '__*_open__' as bare 'YYYY-MM-DD'. Verified against live pages (see
+    /tmp parser_test harness / commit notes)."""
+    low = text.lower()
+    dates = _all_dates(text, year)
+    results = {}
+
+    def emit(dl_type, short, d):
+        if dl_type in results:
+            return
+        tz = _detect_tz(text[d[0]:d[0] + 80])
+        results[dl_type] = (short, f"{d[2]:04d}-{d[3]:02d}-{d[4]:02d} 23:59:59", tz)
+
+    for kw, (dl_type, short) in _KEYWORD_RULES:
+        if dl_type in results:
+            continue
+        start = 0
+        while True:
+            idx = low.find(kw, start)
+            if idx == -1:
+                break
+            start = idx + len(kw)
+            ctx = low[max(0, idx - 30):idx + len(kw) + 30]
+            # "paper registration" legitimately contains the _NEG word
+            # "registration" — exempt it.
+            if any(neg in ctx for neg in _NEG_CONTEXT) and "paper registration" not in ctx:
+                continue
+            d = _pick_date(dates, idx, idx + len(kw), layout)
+            if d:
+                emit(dl_type, short, d)
+                break
+
+    # A supplementary deadline bundled into the paper line (same date, e.g.
+    # NeurIPS "...including all supplementary materials") is not a separate event.
+    if "supplementary" in results and "paper" in results:
+        if results["supplementary"][1] == results["paper"][1]:
+            del results["supplementary"]
+
+    # Submission-/registration-window OPEN dates. 'opens' (verb) only — avoids
+    # matching the "open" in the "OpenReview"/"Open Review" platform name.
+    for m in re.finditer(r"\bopens\b", low):
+        if layout == "date_first":
+            ctx = low[m.end():m.end() + 45]
+        else:
+            ctx = low[max(0, m.start() - 45):m.start()]
+        d = _pick_date(dates, m.start(), m.end(), layout)
+        if not d:
+            continue
+        ds = f"{d[2]:04d}-{d[3]:02d}-{d[4]:02d}"
+        if "registration" in ctx:
+            results.setdefault("__reg_open__", ds)
+        elif "submission" in ctx or "paper" in ctx:
+            results.setdefault("__sub_open__", ds)
+    return results
+
+
+def fetch_official_deadlines(conf_id: str, year: int):
+    """Fetch a conference's official page for `year` and extract deadlines.
+    Returns dl_type -> (short, date_str, tz), or {} on any failure (caller
+    falls back to the tentative estimate). Cached per (conf_id, year)."""
+    src = OFFICIAL_SOURCES.get(conf_id)
+    if not src:
+        return {}
+    cache = fetch_official_deadlines._cache
+    key = (conf_id, year)
+    if key in cache:
+        return cache[key]
+
+    result = {}
+    url = src["url"](year)
+    layout = src.get("layout", "label_first")
+    try:
+        req = urllib.request.Request(url, headers=_BROWSER_HEADERS)
+        with urllib.request.urlopen(req, timeout=30) as r:
+            html = r.read().decode("utf-8", "replace")
+        text = _html_to_text(html)
+        parser = src.get("parser")
+        if parser:
+            result = parser(text) or {}
+        else:
+            result = heuristic_parse_deadlines(text, year=year, layout=layout) or {}
+        result["__link__"] = url
+        print(f"  [official] {conf_id} {year}: {[k for k in result if k != '__link__']} from {url}",
+              file=sys.stderr)
+    except Exception as e:
+        print(f"  [official] {conf_id} {year}: fetch/parse failed ({type(e).__name__}: {e})",
+              file=sys.stderr)
+
+    cache[key] = result
+    return result
+
+
+fetch_official_deadlines._cache = {}
+
+
 def stable_uid(title: str, dt: datetime) -> str:
     h = hashlib.md5(f"{title}|{dt.isoformat()}".encode()).hexdigest()[:16]
     return f"{h}@ai-conf-deadlines"
@@ -173,10 +435,13 @@ def ics_escape(s: str) -> str:
     return s.replace("\\", "\\\\").replace(",", "\\,").replace(";", "\\;").replace("\n", "\\n")
 
 
-def make_vevent(title: str, dt_utc: datetime, description: str, dtstamp: datetime) -> str:
-    uid = stable_uid(title, dt_utc)
-    dtstart = dt_utc.strftime("%Y%m%dT%H%M%SZ")
-    dtend = (dt_utc + timedelta(minutes=30)).strftime("%Y%m%dT%H%M%SZ")
+def make_vevent(title: str, start_dt: datetime, end_dt: datetime,
+                description: str, dtstamp: datetime) -> str:
+    """A submission-window event spanning [start_dt, end_dt] (the deadline).
+    Reminders are anchored to the END (the deadline), not the start."""
+    uid = stable_uid(title, end_dt)
+    dtstart = start_dt.strftime("%Y%m%dT%H%M%SZ")
+    dtend = end_dt.strftime("%Y%m%dT%H%M%SZ")
     dtstamp_str = dtstamp.strftime("%Y%m%dT%H%M%SZ")
     return f"""BEGIN:VEVENT
 UID:{uid}
@@ -186,21 +451,35 @@ DTEND:{dtend}
 SUMMARY:{ics_escape(title)}
 DESCRIPTION:{ics_escape(description)}
 BEGIN:VALARM
-TRIGGER:-P7D
+TRIGGER;RELATED=END:-P7D
 ACTION:DISPLAY
 DESCRIPTION:{ics_escape(title)} — 7 days
 END:VALARM
 BEGIN:VALARM
-TRIGGER:-P1D
+TRIGGER;RELATED=END:-P1D
 ACTION:DISPLAY
 DESCRIPTION:{ics_escape(title)} — 1 day
 END:VALARM
 BEGIN:VALARM
-TRIGGER:-PT1H
+TRIGGER;RELATED=END:-PT1H
 ACTION:DISPLAY
 DESCRIPTION:{ics_escape(title)} — 1 hour
 END:VALARM
 END:VEVENT"""
+
+
+def _open_to_dt(date_str: str) -> datetime:
+    """A bare 'YYYY-MM-DD' open date → 00:00:00 UTC that day."""
+    d = datetime.strptime(date_str, "%Y-%m-%d")
+    return d.replace(tzinfo=timezone.utc)
+
+
+def period_start(end_dt: datetime, open_dt):
+    """Return (start_dt, start_estimated). With a known open date, that's the
+    start. Otherwise fall back to deadline − 7 days and flag it estimated."""
+    if open_dt is not None:
+        return open_dt, False
+    return end_dt - timedelta(days=7), True
 
 
 # ---------------------------------------------------------------------------
@@ -208,7 +487,7 @@ END:VEVENT"""
 # ---------------------------------------------------------------------------
 
 def collect_from_ai_deadlines(now_utc: datetime):
-    """Returns list of (title, dt_utc, description, is_tentative)."""
+    """Returns list of (title, end_dt, start_dt, description, is_tent, start_est)."""
     events = []
     for conf_id, display in INTEREST.items():
         data = fetch_yaml(conf_id)
@@ -226,40 +505,36 @@ def collect_from_ai_deadlines(now_utc: datetime):
                 pattern_cycle = c
                 break
 
-        # Add confirmed future deadlines from all cycles
-        confirmed_keys = set()  # (year, dl_type, label) we already emitted
+        # Confirmed future deadlines from cycles already in upstream. These have
+        # no scraped open date, so the window start falls back to deadline − 7d.
+        confirmed_keys = set()  # (year, dl_type, short) already emitted
         for cycle in data:
             year = cycle.get("year")
             link = cycle.get("link", "")
             for dl in cycle.get("deadlines", []) or []:
                 dl_type = (dl.get("type") or "").lower()
                 label = dl.get("label", "") or ""
-                if dl_type not in DEADLINE_TYPES:
-                    continue
-                if not _is_main_track(label):
+                if dl_type not in DEADLINE_TYPES or not _is_main_track(label):
                     continue
                 date_str = dl.get("date")
                 tz = dl.get("timezone", "AoE")
                 if not date_str:
                     continue
                 try:
-                    dt_utc = parse_deadline_dt(date_str, tz)
+                    end_dt = parse_deadline_dt(date_str, tz)
                 except Exception as e:
                     print(f"  [warn] {display} {year} {dl_type}: parse fail ({e})", file=sys.stderr)
                     continue
                 short = _shorten_label(label, dl_type)
                 confirmed_keys.add((year, dl_type, short))
-                if dt_utc <= now_utc:
+                if end_dt <= now_utc:
                     continue
-                title = f"{display} {year} {short}"
+                start_dt, start_est = period_start(end_dt, None)
                 desc = f"{label}. Source: huggingface/ai-deadlines ({link})"
-                events.append((title, dt_utc, desc, False))
-                confirmed_keys.add((year, dl_type, short))
-                if dt_utc <= now_utc:
-                    continue
-                title = f"{display} {year} {short}"
-                desc = f"{label}. Source: huggingface/ai-deadlines ({link})"
-                events.append((title, dt_utc, desc, False))
+                if start_est:
+                    desc += " Window start estimated (deadline − 7d); no official open date."
+                events.append((f"{display} {year} {short}", end_dt, start_dt,
+                               desc, False, start_est))
 
         # For each cycle that exists in years_present but has empty deadlines, fill
         # from pattern. Also generate one cycle ahead if no entry exists yet.
@@ -286,12 +561,23 @@ def collect_from_ai_deadlines(now_utc: datetime):
 
         for target_year in sorted(candidate_years):
             year_offset = target_year - pattern_year
+            # Observe the official site for this cycle (if a source is registered).
+            official = fetch_official_deadlines(conf_id, target_year)
+            # Real submission-window open date (used even when the deadline is
+            # only an estimate). None → window start falls back to deadline − 7d.
+            sub_open_dt = None
+            if official.get("__sub_open__"):
+                try:
+                    sub_open_dt = _open_to_dt(official["__sub_open__"])
+                except Exception:
+                    sub_open_dt = None
+            # Remember the abstract deadline → end of the registration window.
+            abstract_end, abstract_tent = None, True
+
             for dl in pattern_cycle.get("deadlines", []) or []:
                 dl_type = (dl.get("type") or "").lower()
                 label = dl.get("label", "") or ""
-                if dl_type not in DEADLINE_TYPES:
-                    continue
-                if not _is_main_track(label):
+                if dl_type not in DEADLINE_TYPES or not _is_main_track(label):
                     continue
                 date_str = dl.get("date")
                 tz = dl.get("timezone", "AoE")
@@ -302,25 +588,72 @@ def collect_from_ai_deadlines(now_utc: datetime):
                 except Exception:
                     continue
                 tentative_dt = pattern_dt + timedelta(days=365 * year_offset)
-                if tentative_dt <= now_utc:
-                    continue
                 short = _shorten_label(label, dl_type)
-                # Skip if confirmed already
                 if (target_year, dl_type, short) in confirmed_keys:
                     continue
-                title = f"{display} {target_year} {short} (tentative)"
-                desc = (
+
+                # Default: pattern-based estimate (tentative deadline).
+                end_dt, is_tent, use_short = tentative_dt, True, short
+                src_desc = (
                     f"Tentative — based on {display} {pattern_year} pattern "
                     f"({label or dl_type}: {date_str} {tz}). "
                     f"Verify on official site when announced."
                 )
-                events.append((title, tentative_dt, desc, True))
+                # Hybrid: trust the official date if it's within the sanity window.
+                off = official.get(dl_type)
+                if off:
+                    off_short, off_date, off_tz = off
+                    try:
+                        off_dt = parse_deadline_dt(off_date, off_tz)
+                    except Exception:
+                        off_dt = None
+                    if off_dt and abs((off_dt - tentative_dt).days) <= SANITY_WINDOW_DAYS:
+                        end_dt, is_tent, use_short = off_dt, False, off_short
+                        src_desc = (f"{off_short} deadline. Source: official site "
+                                    f"({official.get('__link__', '')})")
+                        confirmed_keys.add((target_year, dl_type, off_short))
+                    else:
+                        why = "out of sanity window" if off_dt else "unparseable"
+                        print(f"  [official] {display} {target_year} {dl_type}: "
+                              f"rejected ({why}) → keeping tentative", file=sys.stderr)
+
+                if dl_type == "abstract":
+                    abstract_end, abstract_tent = end_dt, is_tent
+
+                if end_dt <= now_utc:
+                    continue
+
+                start_dt, start_est = period_start(end_dt, sub_open_dt)
+                desc = src_desc
+                if start_est:
+                    desc += " Window start estimated (deadline − 7d); official open date unknown."
+                else:
+                    desc += f" Submission opens {official['__sub_open__']}."
+                tent = " (tentative)" if is_tent else ""
+                events.append((f"{display} {target_year} {use_short}{tent}",
+                               end_dt, start_dt, desc, is_tent, start_est))
+
+            # Author-registration window: registration opens → abstract deadline.
+            reg_open = official.get("__reg_open__")
+            if reg_open and abstract_end is not None and abstract_end > now_utc:
+                try:
+                    reg_start = _open_to_dt(reg_open)
+                except Exception:
+                    reg_start = None
+                if reg_start is not None:
+                    tent = " (tentative)" if abstract_tent else ""
+                    desc = (f"Author registration window. Opens {reg_open}; closes at "
+                            f"the abstract deadline. Source: official site "
+                            f"({official.get('__link__', '')})")
+                    events.append((f"{display} {target_year} Author registration{tent}",
+                                   abstract_end, reg_start, desc, abstract_tent, False))
 
     return events
 
 
 def collect_from_extras(now_utc: datetime):
-    """Handle conferences not in ai-deadlines repo."""
+    """Handle conferences not in ai-deadlines repo. No official open dates, so
+    every window start falls back to deadline − 7d (estimated)."""
     events = []
     for display, conf in EXTRA_CONFS.items():
         latest = conf["latest"]
@@ -328,20 +661,23 @@ def collect_from_extras(now_utc: datetime):
         # confirmed entries from latest
         for dl_type, date_str, tz in latest["deadlines"]:
             try:
-                dt_utc = parse_deadline_dt(date_str, tz)
+                end_dt = parse_deadline_dt(date_str, tz)
             except Exception:
                 continue
-            if dt_utc <= now_utc:
+            if end_dt <= now_utc:
                 continue
             title = f"{display} {latest_year} {dl_type.capitalize()}"
             # Mark supplementary as tentative if it was a guess
             is_tent = (display == "3DV" and dl_type == "supplementary")
             if is_tent:
                 title += " (tentative)"
-                desc = f"Tentative — exact date not yet on 3dvconf.github.io. Estimated from announcement (Sep)."
+                desc = "Tentative — exact date not yet on 3dvconf.github.io. Estimated from announcement (Sep)."
             else:
                 desc = f"{dl_type.capitalize()} deadline. Hardcoded; ai-deadlines repo doesn't track {display}."
-            events.append((title, dt_utc, desc, is_tent))
+            start_dt, start_est = period_start(end_dt, None)
+            if start_est:
+                desc += " Window start estimated (deadline − 7d); no official open date."
+            events.append((title, end_dt, start_dt, desc, is_tent, start_est))
 
         # tentative next cycle
         if not conf.get("annual"):
@@ -352,15 +688,18 @@ def collect_from_extras(now_utc: datetime):
                 pattern_dt = parse_deadline_dt(date_str, tz)
             except Exception:
                 continue
-            tentative_dt = pattern_dt + timedelta(days=365)
-            if tentative_dt <= now_utc:
+            end_dt = pattern_dt + timedelta(days=365)
+            if end_dt <= now_utc:
                 continue
-            title = f"{display} {next_year} {dl_type.capitalize()} (tentative)"
+            start_dt, start_est = period_start(end_dt, None)
             desc = (
                 f"Tentative — based on {display} {latest_year} pattern "
                 f"({dl_type}: {date_str} {tz}). Verify on official site."
             )
-            events.append((title, tentative_dt, desc, True))
+            if start_est:
+                desc += " Window start estimated (deadline − 7d); no official open date."
+            events.append((f"{display} {next_year} {dl_type.capitalize()} (tentative)",
+                           end_dt, start_dt, desc, True, start_est))
     return events
 
 
@@ -369,17 +708,15 @@ def build_ics():
     events = collect_from_ai_deadlines(now_utc) + collect_from_extras(now_utc)
     # de-dup by (title) - if both confirmed and tentative emitted, prefer confirmed
     by_key = {}
-    for title, dt_utc, desc, is_tent in events:
+    for ev in events:
+        title, end_dt, start_dt, desc, is_tent, start_est = ev
         # normalize key: same conf + same year + same type → keep confirmed
         base_key = title.replace(" (tentative)", "")
         existing = by_key.get(base_key)
         if existing is None:
-            by_key[base_key] = (title, dt_utc, desc, is_tent)
-        else:
-            ex_title, ex_dt, ex_desc, ex_tent = existing
-            # confirmed beats tentative
-            if ex_tent and not is_tent:
-                by_key[base_key] = (title, dt_utc, desc, is_tent)
+            by_key[base_key] = ev
+        elif existing[4] and not is_tent:  # confirmed beats tentative
+            by_key[base_key] = ev
     events = sorted(by_key.values(), key=lambda e: e[1])
 
     lines = [
@@ -390,19 +727,19 @@ def build_ics():
         "METHOD:PUBLISH",
         "X-WR-CALNAME:Conference Deadlines",
         "X-WR-TIMEZONE:Asia/Seoul",
-        f"X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated {now_utc.strftime('%Y-%m-%d %H:%M UTC')}. (tentative) = estimated from previous cycle.",
+        f"X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated {now_utc.strftime('%Y-%m-%d %H:%M UTC')}. Events span the submission window (open → deadline). (tentative) = estimated from previous cycle.",
     ]
-    for title, dt_utc, desc, _ in events:
-        lines.append(make_vevent(title, dt_utc, desc, now_utc))
+    for title, end_dt, start_dt, desc, _, _ in events:
+        lines.append(make_vevent(title, start_dt, end_dt, desc, now_utc))
     lines.append("END:VCALENDAR")
     content = "\n".join(lines) + "\n"
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(content, encoding="utf-8")
     print(f"Wrote {len(events)} events to {OUTPUT_PATH}")
-    for title, dt_utc, _, is_tent in events:
-        marker = "T" if is_tent else " "
-        print(f"  [{marker}] {dt_utc.strftime('%Y-%m-%d %H:%MZ')}  {title}")
+    for title, end_dt, start_dt, _, is_tent, start_est in events:
+        marker = "T" if is_tent else ("~" if start_est else " ")
+        print(f"  [{marker}] {start_dt.strftime('%m-%d')}→{end_dt.strftime('%Y-%m-%d %H:%MZ')}  {title}")
 
 
 if __name__ == "__main__":

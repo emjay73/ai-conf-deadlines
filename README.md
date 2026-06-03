@@ -2,7 +2,17 @@
 
 AI/CV/Graphics 학회 제출 마감 자동 캘린더.
 
-매일 03:00 UTC (12:00 KST)에 [huggingface/ai-deadlines](https://github.com/huggingface/ai-deadlines)에서 최신 일정을 가져와 `docs/deadlines.ics`를 갱신합니다. 공식 발표가 없는 학회는 직전 사이클 패턴을 기준으로 `(tentative)` 표기해 추정 일정을 생성합니다.
+매일 03:00 UTC (12:00 KST)에 [huggingface/ai-deadlines](https://github.com/huggingface/ai-deadlines)에서 최신 일정을 가져와 `docs/deadlines.ics`를 갱신합니다.
+
+각 일정은 **접수 오픈 → 마감까지의 기간**(멀티데이 이벤트)으로 등록되고, 알림은 마감 기준 7일·1일·1시간 전에 울립니다.
+
+다음 사이클이 아직 업스트림 레포에 없으면, 학회 **공식 페이지를 직접 관찰**(`OFFICIAL_SOURCES`)해 날짜를 추출합니다 — 파싱한 날짜가 직전 사이클 추정치의 ±75일(`SANITY_WINDOW_DAYS`) 안이면 **확정(confirmed)**으로 신뢰하고, 못 긁거나 벗어나면 직전 사이클 패턴 기준 `(tentative)` 추정으로 폴백합니다. 공식 오픈일이 있으면 그날을 기간 시작점으로, 없으면 **마감 7일 전**을 시작점으로 추정합니다. 공식 페이지에 author registration 오픈일이 있으면 별도 등록 기간(registration open → abstract 마감)도 추가합니다.
+
+현재 공식 페이지를 관찰하는 학회: **AAAI**(`aaai.org`), **NeurIPS·ICML**(`*.cc/Conferences/{year}/CallForPapers`), **CVPR·ICCV·ECCV**(`thecvf`/`ecva` `.../Dates`). 각 파서는 라이브 페이지(2025/2026 사이클)에 직접 돌려 abstract/paper/supplementary 날짜가 정확한지 검증한 뒤 등록했습니다.
+
+> 공식 사이트를 새로 추가하려면 `scripts/build_ics.py`의 `OFFICIAL_SOURCES`에 `conf_id: {"url": lambda year: ...}` 한 줄을 넣으면 됩니다. 라벨이 날짜 앞이 아니라 뒤에 오는 사이트(AAAI류)는 `"layout": "date_first"`를 함께 지정하고, 표 구조가 특이하면 `"parser"`로 전용 파서를 붙일 수 있습니다.
+>
+> **제외**: ICLR(마감을 연도 없이 "Sep 19"로 표기 + 학회 전년도 마감이라 연도 추론 불가), WACV(연도별 서브도메인 + 멀티라운드), 로보틱스 ICRA/IROS/RSS/CoRL(연도-무관 단일 도메인이거나 산문형 일정이라 `url(year)` 패턴화·파싱이 불안정). 이들은 직전 사이클 추정(`(tentative)`)으로 남습니다.
 
 ## 관심 학회
 
