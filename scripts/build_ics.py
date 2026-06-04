@@ -9,11 +9,14 @@ Strategy:
    official page (OFFICIAL_SOURCES): a parsed date within SANITY_WINDOW_DAYS of
    the +1-cycle estimate is trusted (confirmed); otherwise fall back to the
    pattern estimate, marked "(tentative)".
-5. Every deadline is emitted as a submission-WINDOW event spanning [start, deadline]:
-   start = official submission-open date when known, else deadline − 7 days
-   (estimated). Reminders are anchored to the deadline (RELATED=END).
-6. When the official page exposes an author-registration open date, an extra
-   "Author registration" window (reg-open → abstract deadline) is emitted.
+5. Events are ALL-DAY (VALUE=DATE) in KST. Each deadline → one all-day event on
+   its KST deadline date = (deadline in KST − 1 day): a Mar 6 15:00 KST deadline
+   lands on Mar 5; an AoE 23:59 deadline lands on its AoE calendar day. The
+   submission OPEN is shared across a cycle's deadlines, so it's a single
+   '접수 시작' marker (date = official open, else deadline − 7d).
+6. When the official page exposes an author-registration open date, a separate
+   '등록 시작' marker + an "Author registration" deadline (= the abstract
+   deadline day) are emitted.
 """
 
 import hashlib
@@ -435,37 +438,34 @@ def ics_escape(s: str) -> str:
     return s.replace("\\", "\\\\").replace(",", "\\,").replace(";", "\\;").replace("\n", "\\n")
 
 
-def make_vevent(title: str, start_dt: datetime, end_dt: datetime,
-                description: str, dtstamp: datetime) -> str:
-    """A submission-window event spanning [start_dt, end_dt] (the deadline).
-    Reminders are anchored to the END (the deadline), not the start."""
-    uid = stable_uid(title, end_dt)
-    dtstart = start_dt.strftime("%Y%m%dT%H%M%SZ")
-    dtend = end_dt.strftime("%Y%m%dT%H%M%SZ")
+KST = timezone(timedelta(hours=9))
+
+
+def deadline_kst_date(end_utc: datetime):
+    """The all-day date for a deadline: the last KST day whose closing midnight
+    (24:00) is ≤ the deadline — i.e. (deadline in KST − 1 day).date(). So a
+    Mar 6 15:00 KST deadline lands on Mar 5; an AoE 23:59 deadline lands on its
+    AoE calendar day."""
+    return (end_utc.astimezone(KST) - timedelta(days=1)).date()
+
+
+def make_allday_vevent(title: str, day, description: str, dtstamp: datetime,
+                       reminders: bool) -> str:
+    """An all-day (VALUE=DATE) event on `day` (a date). DTEND is the next day
+    (exclusive), per RFC 5545. Optional 7-day / 1-day popup reminders."""
+    uid = stable_uid(title, datetime(day.year, day.month, day.day, tzinfo=timezone.utc))
+    dtstart = day.strftime("%Y%m%d")
+    dtend = (day + timedelta(days=1)).strftime("%Y%m%d")
     dtstamp_str = dtstamp.strftime("%Y%m%dT%H%M%SZ")
-    return f"""BEGIN:VEVENT
-UID:{uid}
-DTSTAMP:{dtstamp_str}
-DTSTART:{dtstart}
-DTEND:{dtend}
-SUMMARY:{ics_escape(title)}
-DESCRIPTION:{ics_escape(description)}
-BEGIN:VALARM
-TRIGGER;RELATED=END:-P7D
-ACTION:DISPLAY
-DESCRIPTION:{ics_escape(title)} — 7 days
-END:VALARM
-BEGIN:VALARM
-TRIGGER;RELATED=END:-P1D
-ACTION:DISPLAY
-DESCRIPTION:{ics_escape(title)} — 1 day
-END:VALARM
-BEGIN:VALARM
-TRIGGER;RELATED=END:-PT1H
-ACTION:DISPLAY
-DESCRIPTION:{ics_escape(title)} — 1 hour
-END:VALARM
-END:VEVENT"""
+    alarms = ""
+    if reminders:
+        for trig, lbl in (("-P7D", "7 days"), ("-P1D", "1 day")):
+            alarms += (f"\nBEGIN:VALARM\nTRIGGER:{trig}\nACTION:DISPLAY\n"
+                       f"DESCRIPTION:{ics_escape(title)} — {lbl}\nEND:VALARM")
+    return (f"BEGIN:VEVENT\nUID:{uid}\nDTSTAMP:{dtstamp_str}\n"
+            f"DTSTART;VALUE=DATE:{dtstart}\nDTEND;VALUE=DATE:{dtend}\n"
+            f"SUMMARY:{ics_escape(title)}\nDESCRIPTION:{ics_escape(description)}"
+            f"{alarms}\nEND:VEVENT")
 
 
 def _open_to_dt(date_str: str) -> datetime:
@@ -727,19 +727,44 @@ def build_ics():
         "METHOD:PUBLISH",
         "X-WR-CALNAME:Conference Deadlines",
         "X-WR-TIMEZONE:Asia/Seoul",
-        f"X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated {now_utc.strftime('%Y-%m-%d %H:%M UTC')}. Events span the submission window (open → deadline). (tentative) = estimated from previous cycle.",
+        f"X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated {now_utc.strftime('%Y-%m-%d %H:%M UTC')}. All-day events in KST: a '시작' (open) marker per cycle + a deadline marker per type. (tentative) = estimated from previous cycle.",
     ]
-    for title, end_dt, start_dt, desc, _, _ in events:
-        lines.append(make_vevent(title, start_dt, end_dt, desc, now_utc))
+
+    # Each deadline → one all-day event on its KST deadline date. The submission
+    # /registration OPEN is shared across a cycle's deadlines, so it's collapsed
+    # to one '시작' marker per (conf-year, kind) instead of repeating per type.
+    open_seen = set()
+    summary = []
+    for title, end_dt, start_dt, desc, is_tent, start_est in events:
+        ddate = deadline_kst_date(end_dt)
+        lines.append(make_allday_vevent(title, ddate, desc, now_utc, reminders=True))
+        summary.append((ddate, "T" if is_tent else " ", title))
+
+        m = re.match(r"^(.*?\b(?:19|20)\d{2})\b", title)
+        prefix = m.group(1) if m else title
+        is_reg = "Author registration" in title
+        # Open date: real open (KST date) when known, else 7 days before the
+        # deadline day (estimated).
+        odate = (ddate - timedelta(days=7)) if start_est else start_dt.astimezone(KST).date()
+        kind = "등록" if is_reg else "접수"
+        okey = (prefix, kind)
+        if okey not in open_seen:
+            open_seen.add(okey)
+            otitle = f"{prefix} {kind} 시작" + (" (tentative)" if (is_tent or start_est) else "")
+            odesc = ("Estimated open (deadline − 7d); no official open date."
+                     if start_est else "Submission window opens.")
+            lines.append(make_allday_vevent(otitle, odate, odesc, now_utc, reminders=False))
+            summary.append((odate, "o", otitle))
+
     lines.append("END:VCALENDAR")
     content = "\n".join(lines) + "\n"
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(content, encoding="utf-8")
-    print(f"Wrote {len(events)} events to {OUTPUT_PATH}")
-    for title, end_dt, start_dt, _, is_tent, start_est in events:
-        marker = "T" if is_tent else ("~" if start_est else " ")
-        print(f"  [{marker}] {start_dt.strftime('%m-%d')}→{end_dt.strftime('%Y-%m-%d %H:%MZ')}  {title}")
+    n_vevents = sum(1 for ln in lines if ln.startswith("BEGIN:VEVENT"))
+    print(f"Wrote {n_vevents} all-day events from {len(events)} deadlines to {OUTPUT_PATH}")
+    for ddate, marker, title in sorted(summary):
+        print(f"  [{marker}] {ddate.isoformat()}  {title}")
 
 
 if __name__ == "__main__":

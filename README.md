@@ -4,7 +4,7 @@ AI/CV/Graphics 학회 제출 마감 자동 캘린더.
 
 매일 03:00 UTC (12:00 KST)에 [huggingface/ai-deadlines](https://github.com/huggingface/ai-deadlines)에서 최신 일정을 가져와 `docs/deadlines.ics`를 갱신합니다.
 
-각 일정은 **접수 오픈 → 마감까지의 기간**(멀티데이 이벤트)으로 등록되고, 알림은 마감 기준 7일·1일·1시간 전에 울립니다.
+각 일정은 **KST 기준 종일(all-day) 이벤트**로 등록됩니다 — 사이클당 **접수 시작** 마커 1개 + 마감 종류별(abstract/paper/supplementary) **마감일** 마커. 마감일은 *KST 자정을 온전히 포함하는 마지막 날* 규칙을 따릅니다(= `마감시각 KST − 1일`의 날짜). 예: 3월 6일 15:00 마감 → 3월 5일, AoE 23:59 마감 → 해당 AoE 달력일. 마감 마커엔 7일·1일 전 알림이 붙습니다.
 
 다음 사이클이 아직 업스트림 레포에 없으면, 학회 **공식 페이지를 직접 관찰**(`OFFICIAL_SOURCES`)해 날짜를 추출합니다 — 파싱한 날짜가 직전 사이클 추정치의 ±75일(`SANITY_WINDOW_DAYS`) 안이면 **확정(confirmed)**으로 신뢰하고, 못 긁거나 벗어나면 직전 사이클 패턴 기준 `(tentative)` 추정으로 폴백합니다. 공식 오픈일이 있으면 그날을 기간 시작점으로, 없으면 **마감 7일 전**을 시작점으로 추정합니다. 공식 페이지에 author registration 오픈일이 있으면 별도 등록 기간(registration open → abstract 마감)도 추가합니다.
 
@@ -63,11 +63,10 @@ Google Calendar는 외부 ics URL을 약 24시간 주기로 자동 fetch합니�
 
 ## 알림
 
-각 이벤트에 다음 알림이 포함됩니다:
+마감일 이벤트에 다음 알림이 포함됩니다(접수/등록 시작 마커에는 알림 없음):
 
 - 7일 전
 - 1일 전
-- 1시간 전
 
 알림이 너무 많으면 Google Calendar 설정에서 이 캘린더의 기본 알림을 조정하세요.
 
