@@ -737,8 +737,14 @@ def build_ics():
     summary = []
     for title, end_dt, start_dt, desc, is_tent, start_est in events:
         ddate = deadline_kst_date(end_dt)
-        lines.append(make_allday_vevent(title, ddate, desc, now_utc, reminders=True))
-        summary.append((ddate, "T" if is_tent else " ", title))
+        # Label the deadline event with '마감' so start vs end is unambiguous
+        # ('시작' markers are the openers). Keep any "(tentative)" at the end.
+        if title.endswith(" (tentative)"):
+            dtitle = title[:-len(" (tentative)")] + " 마감 (tentative)"
+        else:
+            dtitle = title + " 마감"
+        lines.append(make_allday_vevent(dtitle, ddate, desc, now_utc, reminders=True))
+        summary.append((ddate, "T" if is_tent else " ", dtitle))
 
         m = re.match(r"^(.*?\b(?:19|20)\d{2})\b", title)
         prefix = m.group(1) if m else title

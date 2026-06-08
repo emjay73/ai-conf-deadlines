@@ -5,1207 +5,1207 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Conference Deadlines
 X-WR-TIMEZONE:Asia/Seoul
-X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated 2026-06-04 07:33 UTC. All-day events in KST: a '시작' (open) marker per cycle + a deadline marker per type. (tentative) = estimated from previous cycle.
+X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated 2026-06-08 14:41 UTC. All-day events in KST: a '시작' (open) marker per cycle + a deadline marker per type. (tentative) = estimated from previous cycle.
 BEGIN:VEVENT
-UID:a2e2ce6f1374e526@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:2f673d1f32c14b31@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260618
 DTEND;VALUE=DATE:20260619
-SUMMARY:WACV 2027 Round 1 Paper Registration
+SUMMARY:WACV 2027 Round 1 Paper Registration 마감
 DESCRIPTION:Round 1 Paper Registration. Source: huggingface/ai-deadlines (https://wacv.thecvf.com/) Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 1 Paper Registration — 7 days
+DESCRIPTION:WACV 2027 Round 1 Paper Registration 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 1 Paper Registration — 1 day
+DESCRIPTION:WACV 2027 Round 1 Paper Registration 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f68c4ece3a7f49aa@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260611
 DTEND;VALUE=DATE:20260612
 SUMMARY:WACV 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:f9886840905278af@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:858aa0c6662bdf52@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260625
 DTEND;VALUE=DATE:20260626
-SUMMARY:WACV 2027 Round 1 Paper
+SUMMARY:WACV 2027 Round 1 Paper 마감
 DESCRIPTION:Round 1 Paper Submission. Source: huggingface/ai-deadlines (https://wacv.thecvf.com/) Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 1 Paper — 7 days
+DESCRIPTION:WACV 2027 Round 1 Paper 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 1 Paper — 1 day
+DESCRIPTION:WACV 2027 Round 1 Paper 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:ea83fad66d0b3299@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:ef0fdbc6c7ba8cee@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260721
 DTEND;VALUE=DATE:20260722
-SUMMARY:AAAI 2027 Abstract
+SUMMARY:AAAI 2027 Abstract 마감
 DESCRIPTION:Abstract deadline. Source: official site (https://aaai.org/conference/aaai/aaai-27/) Submission opens 2026-06-24.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Abstract — 7 days
+DESCRIPTION:AAAI 2027 Abstract 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Abstract — 1 day
+DESCRIPTION:AAAI 2027 Abstract 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:8cd22d81a9a41299@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260624
 DTEND;VALUE=DATE:20260625
 SUMMARY:AAAI 2027 접수 시작
 DESCRIPTION:Submission window opens.
 END:VEVENT
 BEGIN:VEVENT
-UID:73987016681b5be7@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:77f915f1f71ce8bb@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260721
 DTEND;VALUE=DATE:20260722
-SUMMARY:AAAI 2027 Author registration
+SUMMARY:AAAI 2027 Author registration 마감
 DESCRIPTION:Author registration window. Opens 2026-06-17\; closes at the abstract deadline. Source: official site (https://aaai.org/conference/aaai/aaai-27/)
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Author registration — 7 days
+DESCRIPTION:AAAI 2027 Author registration 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Author registration — 1 day
+DESCRIPTION:AAAI 2027 Author registration 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c9c6b214467b5490@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260617
 DTEND;VALUE=DATE:20260618
 SUMMARY:AAAI 2027 등록 시작
 DESCRIPTION:Submission window opens.
 END:VEVENT
 BEGIN:VEVENT
-UID:be1dd30f9386d393@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:bc5812710815dae8@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260728
 DTEND;VALUE=DATE:20260729
-SUMMARY:AAAI 2027 Paper
+SUMMARY:AAAI 2027 Paper 마감
 DESCRIPTION:Paper deadline. Source: official site (https://aaai.org/conference/aaai/aaai-27/) Submission opens 2026-06-24.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Paper — 7 days
+DESCRIPTION:AAAI 2027 Paper 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Paper — 1 day
+DESCRIPTION:AAAI 2027 Paper 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:847b20fcd966f6b2@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:49d81688a996a314@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260731
 DTEND;VALUE=DATE:20260801
-SUMMARY:AAAI 2027 Supplementary
+SUMMARY:AAAI 2027 Supplementary 마감
 DESCRIPTION:Supplementary deadline. Source: official site (https://aaai.org/conference/aaai/aaai-27/) Submission opens 2026-06-24.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Supplementary — 7 days
+DESCRIPTION:AAAI 2027 Supplementary 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2027 Supplementary — 1 day
+DESCRIPTION:AAAI 2027 Supplementary 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:b8b1203ac51be8b6@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:3db9eafbcc948a07@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260820
 DTEND;VALUE=DATE:20260821
-SUMMARY:WACV 2027 Round 2 New Paper Registration
+SUMMARY:WACV 2027 Round 2 New Paper Registration 마감
 DESCRIPTION:Round 2 New Paper Registration. Source: huggingface/ai-deadlines (https://wacv.thecvf.com/) Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 2 New Paper Registration — 7 days
+DESCRIPTION:WACV 2027 Round 2 New Paper Registration 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 2 New Paper Registration — 1 day
+DESCRIPTION:WACV 2027 Round 2 New Paper Registration 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:ac7b620a56da5058@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:315d7c533d547977@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260827
 DTEND;VALUE=DATE:20260828
-SUMMARY:WACV 2027 Round 2 Papers
+SUMMARY:WACV 2027 Round 2 Papers 마감
 DESCRIPTION:Round 2 Paper Submissions. Source: huggingface/ai-deadlines (https://wacv.thecvf.com/) Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 2 Papers — 7 days
+DESCRIPTION:WACV 2027 Round 2 Papers 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 2 Papers — 1 day
+DESCRIPTION:WACV 2027 Round 2 Papers 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bd588a57c0380cb7@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:676436d5f7c0e328@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260828
 DTEND;VALUE=DATE:20260829
-SUMMARY:3DV 2027 Paper
+SUMMARY:3DV 2027 Paper 마감
 DESCRIPTION:Paper deadline. Hardcoded\; ai-deadlines repo doesn't track 3DV. Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2027 Paper — 7 days
+DESCRIPTION:3DV 2027 Paper 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2027 Paper — 1 day
+DESCRIPTION:3DV 2027 Paper 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ecc4db67d18cb018@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260821
 DTEND;VALUE=DATE:20260822
 SUMMARY:3DV 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:7d377555caee17f9@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:c865942f03623cb7@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260829
 DTEND;VALUE=DATE:20260830
-SUMMARY:WACV 2027 Round 2 Supplemental Material
+SUMMARY:WACV 2027 Round 2 Supplemental Material 마감
 DESCRIPTION:Round 2 Supplemental Material. Source: huggingface/ai-deadlines (https://wacv.thecvf.com/) Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 2 Supplemental Material — 7 days
+DESCRIPTION:WACV 2027 Round 2 Supplemental Material 마감 — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2027 Round 2 Supplemental Material — 1 day
+DESCRIPTION:WACV 2027 Round 2 Supplemental Material 마감 — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:a5abfc72ba672e48@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:2973f9546a657f7a@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260904
 DTEND;VALUE=DATE:20260905
-SUMMARY:3DV 2027 Supplementary (tentative)
+SUMMARY:3DV 2027 Supplementary 마감 (tentative)
 DESCRIPTION:Tentative — exact date not yet on 3dvconf.github.io. Estimated from announcement (Sep). Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2027 Supplementary (tentative) — 7 days
+DESCRIPTION:3DV 2027 Supplementary 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2027 Supplementary (tentative) — 1 day
+DESCRIPTION:3DV 2027 Supplementary 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:253a943ad76ec470@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:9db4dbb3cc82277e@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260915
 DTEND;VALUE=DATE:20260916
-SUMMARY:ICRA 2027 Paper (tentative)
+SUMMARY:ICRA 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on ICRA 2026 pattern (Paper Submission: 2025-09-15 23:59:59 PST). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICRA 2027 Paper (tentative) — 7 days
+DESCRIPTION:ICRA 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICRA 2027 Paper (tentative) — 1 day
+DESCRIPTION:ICRA 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:33da50d339957e95@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260908
 DTEND;VALUE=DATE:20260909
 SUMMARY:ICRA 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:620f20ab687df4ca@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:369b1890de1daec5@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260919
 DTEND;VALUE=DATE:20260920
-SUMMARY:ICLR 2027 Abstract (tentative)
+SUMMARY:ICLR 2027 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on ICLR 2026 pattern (Abstract Submission: 2025-09-19 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICLR 2027 Abstract (tentative) — 7 days
+DESCRIPTION:ICLR 2027 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICLR 2027 Abstract (tentative) — 1 day
+DESCRIPTION:ICLR 2027 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f683ef3075b431b2@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260912
 DTEND;VALUE=DATE:20260913
 SUMMARY:ICLR 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:f5a5bee4b934f472@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:07f5660fe1349f35@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20260924
 DTEND;VALUE=DATE:20260925
-SUMMARY:ICLR 2027 Paper (tentative)
+SUMMARY:ICLR 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on ICLR 2026 pattern (Paper Submission: 2025-09-24 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICLR 2027 Paper (tentative) — 7 days
+DESCRIPTION:ICLR 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICLR 2027 Paper (tentative) — 1 day
+DESCRIPTION:ICLR 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:cfa0765ae84dd6ef@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:c9d7ded2c4bf08e0@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20261107
 DTEND;VALUE=DATE:20261108
-SUMMARY:CVPR 2027 Abstract (tentative)
+SUMMARY:CVPR 2027 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on CVPR 2026 pattern (Abstract Submission: 2025-11-07 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2027 Abstract (tentative) — 7 days
+DESCRIPTION:CVPR 2027 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2027 Abstract (tentative) — 1 day
+DESCRIPTION:CVPR 2027 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4a673a749f00177b@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20261031
 DTEND;VALUE=DATE:20261101
 SUMMARY:CVPR 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:06005c56ef8ddb26@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:50fa6b0d1685f5bd@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20261113
 DTEND;VALUE=DATE:20261114
-SUMMARY:CVPR 2027 Paper (tentative)
+SUMMARY:CVPR 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on CVPR 2026 pattern (Paper Submission: 2025-11-13 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2027 Paper (tentative) — 7 days
+DESCRIPTION:CVPR 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2027 Paper (tentative) — 1 day
+DESCRIPTION:CVPR 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:9914789ef06097ac@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:3fa9068a854b0ecf@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20261120
 DTEND;VALUE=DATE:20261121
-SUMMARY:CVPR 2027 Supplementary Materials (tentative)
+SUMMARY:CVPR 2027 Supplementary Materials 마감 (tentative)
 DESCRIPTION:Tentative — based on CVPR 2026 pattern (Supplementary Materials: 2025-11-20 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2027 Supplementary Materials (tentative) — 7 days
+DESCRIPTION:CVPR 2027 Supplementary Materials 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2027 Supplementary Materials (tentative) — 1 day
+DESCRIPTION:CVPR 2027 Supplementary Materials 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:83c941f3f78c72c7@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:bf2f936f2a75758d@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270115
 DTEND;VALUE=DATE:20270116
-SUMMARY:SIGGRAPH 2027 Technical Papers form (tentative)
+SUMMARY:SIGGRAPH 2027 Technical Papers form 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Technical Papers submission form deadline: 2026-01-15 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Technical Papers form (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2027 Technical Papers form 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Technical Papers form (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2027 Technical Papers form 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d141005e63a7e837@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270108
 DTEND;VALUE=DATE:20270109
 SUMMARY:SIGGRAPH 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:2632bf46deeb1a9a@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:edcd6914eb1c7d72@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270122
 DTEND;VALUE=DATE:20270123
-SUMMARY:SIGGRAPH 2027 Technical Papers (tentative)
+SUMMARY:SIGGRAPH 2027 Technical Papers 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Technical Papers deadline: 2026-01-22 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Technical Papers (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2027 Technical Papers 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Technical Papers (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2027 Technical Papers 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:21c9f75eefac143f@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:220e4b8d5f2eab85@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270123
 DTEND;VALUE=DATE:20270124
-SUMMARY:SIGGRAPH 2027 Upload and conflicts (tentative)
+SUMMARY:SIGGRAPH 2027 Upload and conflicts 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Upload and conflicts deadline: 2026-01-23 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Upload and conflicts (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2027 Upload and conflicts 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Upload and conflicts (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2027 Upload and conflicts 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:624c9245ad97e207@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:24dd8445daf37688@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270123
 DTEND;VALUE=DATE:20270124
-SUMMARY:ICML 2027 Abstract (tentative)
+SUMMARY:ICML 2027 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on ICML 2026 pattern (Abstract Submission: 2026-01-23 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICML 2027 Abstract (tentative) — 7 days
+DESCRIPTION:ICML 2027 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICML 2027 Abstract (tentative) — 1 day
+DESCRIPTION:ICML 2027 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:8f20948a9ae38e9a@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270116
 DTEND;VALUE=DATE:20270117
 SUMMARY:ICML 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:9707d7d06b1c9ff7@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:5a111d52256c5a7d@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270123
 DTEND;VALUE=DATE:20270124
-SUMMARY:RSS 2027 Abstract (tentative)
+SUMMARY:RSS 2027 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on RSS 2026 pattern (Abstract Submission: 2026-01-23 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:RSS 2027 Abstract (tentative) — 7 days
+DESCRIPTION:RSS 2027 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:RSS 2027 Abstract (tentative) — 1 day
+DESCRIPTION:RSS 2027 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a3d9ece4b600eded@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270116
 DTEND;VALUE=DATE:20270117
 SUMMARY:RSS 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:ab96d701d1b4d32f@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:3d97487e949aabb2@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270127
 DTEND;VALUE=DATE:20270128
-SUMMARY:SIGGRAPH 2027 Technical Workshops (tentative)
+SUMMARY:SIGGRAPH 2027 Technical Workshops 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Technical Workshops deadline: 2026-01-27 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Technical Workshops (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2027 Technical Workshops 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2027 Technical Workshops (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2027 Technical Workshops 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:9ff5e2a923d97565@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:447b50d157c3b027@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270128
 DTEND;VALUE=DATE:20270129
-SUMMARY:ICML 2027 Paper (tentative)
+SUMMARY:ICML 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on ICML 2026 pattern (Paper Submission: 2026-01-28 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICML 2027 Paper (tentative) — 7 days
+DESCRIPTION:ICML 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICML 2027 Paper (tentative) — 1 day
+DESCRIPTION:ICML 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:d8a42ecfe6eeecdb@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:0b52a0878827c5dc@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270130
 DTEND;VALUE=DATE:20270131
-SUMMARY:RSS 2027 Paper (tentative)
+SUMMARY:RSS 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on RSS 2026 pattern (Paper Submission: 2026-01-30 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:RSS 2027 Paper (tentative) — 7 days
+DESCRIPTION:RSS 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:RSS 2027 Paper (tentative) — 1 day
+DESCRIPTION:RSS 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:023a2064ff8a6f8c@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:506560859ff66e14@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270206
 DTEND;VALUE=DATE:20270207
-SUMMARY:RSS 2027 Supplementary Materials (tentative)
+SUMMARY:RSS 2027 Supplementary Materials 마감 (tentative)
 DESCRIPTION:Tentative — based on RSS 2026 pattern (Supplementary Materials: 2026-02-06 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:RSS 2027 Supplementary Materials (tentative) — 7 days
+DESCRIPTION:RSS 2027 Supplementary Materials 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:RSS 2027 Supplementary Materials (tentative) — 1 day
+DESCRIPTION:RSS 2027 Supplementary Materials 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:309f8b5c2bf30a68@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:5c2e0d3aea4be3af@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270302
 DTEND;VALUE=DATE:20270303
-SUMMARY:IROS 2027 Paper (tentative)
+SUMMARY:IROS 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on IROS 2026 pattern (Paper submission deadline: 2026-03-02 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:IROS 2027 Paper (tentative) — 7 days
+DESCRIPTION:IROS 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:IROS 2027 Paper (tentative) — 1 day
+DESCRIPTION:IROS 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:185b2254751e62bb@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270223
 DTEND;VALUE=DATE:20270224
 SUMMARY:IROS 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:79b514fe976b2027@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:e6ab9403c8617f09@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270303
 DTEND;VALUE=DATE:20270304
-SUMMARY:ICCV 2027 Abstract (tentative)
+SUMMARY:ICCV 2027 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on ICCV 2025 pattern (Abstract submission: 2025-03-04 09:59:59 UTC+0). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICCV 2027 Abstract (tentative) — 7 days
+DESCRIPTION:ICCV 2027 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICCV 2027 Abstract (tentative) — 1 day
+DESCRIPTION:ICCV 2027 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7ce2868e129485d6@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270224
 DTEND;VALUE=DATE:20270225
 SUMMARY:ICCV 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:9e3937ee52baec0d@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:79c4904792cc4df0@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270307
 DTEND;VALUE=DATE:20270308
-SUMMARY:ICCV 2027 Paper (tentative)
+SUMMARY:ICCV 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on ICCV 2025 pattern (Paper submission: 2025-03-08 09:59:59 UTC+0). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICCV 2027 Paper (tentative) — 7 days
+DESCRIPTION:ICCV 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICCV 2027 Paper (tentative) — 1 day
+DESCRIPTION:ICCV 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:b87a7c6b316067d6@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:2bbc58031077b7b9@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270307
 DTEND;VALUE=DATE:20270308
-SUMMARY:IROS 2027 Paper video (tentative)
+SUMMARY:IROS 2027 Paper video 마감 (tentative)
 DESCRIPTION:Tentative — based on IROS 2026 pattern (Paper video submission deadline: 2026-03-07 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:IROS 2027 Paper video (tentative) — 7 days
+DESCRIPTION:IROS 2027 Paper video 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:IROS 2027 Paper video (tentative) — 1 day
+DESCRIPTION:IROS 2027 Paper video 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:77f2ca662a44ca43@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:8378627193c9a3e6@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270504
 DTEND;VALUE=DATE:20270505
-SUMMARY:NeurIPS 2027 Abstract registration (tentative)
+SUMMARY:NeurIPS 2027 Abstract registration 마감 (tentative)
 DESCRIPTION:Tentative — based on NeurIPS 2026 pattern (Abstract registration deadline: 2026-05-04 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:NeurIPS 2027 Abstract registration (tentative) — 7 days
+DESCRIPTION:NeurIPS 2027 Abstract registration 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:NeurIPS 2027 Abstract registration (tentative) — 1 day
+DESCRIPTION:NeurIPS 2027 Abstract registration 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:30e1273a6eb4a91a@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270427
 DTEND;VALUE=DATE:20270428
 SUMMARY:NeurIPS 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:9c85558c6d485b5d@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:835060a6e5496ccb@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270506
 DTEND;VALUE=DATE:20270507
-SUMMARY:NeurIPS 2027 Paper (tentative)
+SUMMARY:NeurIPS 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on NeurIPS 2026 pattern (Paper submission deadline: 2026-05-06 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:NeurIPS 2027 Paper (tentative) — 7 days
+DESCRIPTION:NeurIPS 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:NeurIPS 2027 Paper (tentative) — 1 day
+DESCRIPTION:NeurIPS 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:93877b9e2f55be81@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:2327f282758b635a@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270506
 DTEND;VALUE=DATE:20270507
-SUMMARY:NeurIPS 2027 Supplementary materials (tentative)
+SUMMARY:NeurIPS 2027 Supplementary materials 마감 (tentative)
 DESCRIPTION:Tentative — based on NeurIPS 2026 pattern (Supplementary materials deadline: 2026-05-06 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:NeurIPS 2027 Supplementary materials (tentative) — 7 days
+DESCRIPTION:NeurIPS 2027 Supplementary materials 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:NeurIPS 2027 Supplementary materials (tentative) — 1 day
+DESCRIPTION:NeurIPS 2027 Supplementary materials 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:b67ae8bf8c230e31@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:041ca2fd7a150f38@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270512
 DTEND;VALUE=DATE:20270513
-SUMMARY:SIGGRAPH Asia 2027 Paper (tentative)
+SUMMARY:SIGGRAPH Asia 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH Asia 2026 pattern (paper: 2026-05-12 AoE). Verify on official site. Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH Asia 2027 Paper (tentative) — 7 days
+DESCRIPTION:SIGGRAPH Asia 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH Asia 2027 Paper (tentative) — 1 day
+DESCRIPTION:SIGGRAPH Asia 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:86547b6c2555e97e@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270505
 DTEND;VALUE=DATE:20270506
 SUMMARY:SIGGRAPH Asia 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:e69017e4cf98b050@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:92230dc008661c20@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270525
 DTEND;VALUE=DATE:20270526
-SUMMARY:CoRL 2027 Abstract (tentative)
+SUMMARY:CoRL 2027 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on CoRL 2026 pattern (Abstract submission deadline: 2026-05-26 11:59:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CoRL 2027 Abstract (tentative) — 7 days
+DESCRIPTION:CoRL 2027 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CoRL 2027 Abstract (tentative) — 1 day
+DESCRIPTION:CoRL 2027 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ffed926e29592ed7@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270518
 DTEND;VALUE=DATE:20270519
 SUMMARY:CoRL 2027 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:439c7ebc75f99d97@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:ecd4f92f3323036f@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270528
 DTEND;VALUE=DATE:20270529
-SUMMARY:CoRL 2027 Paper (tentative)
+SUMMARY:CoRL 2027 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on CoRL 2026 pattern (Paper submission deadline: 2026-05-29 11:59:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CoRL 2027 Paper (tentative) — 7 days
+DESCRIPTION:CoRL 2027 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CoRL 2027 Paper (tentative) — 1 day
+DESCRIPTION:CoRL 2027 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:61b148a53b795546@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:f8418bc493ec5b4e@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270618
 DTEND;VALUE=DATE:20270619
-SUMMARY:WACV 2028 Round 1 Paper Registration (tentative)
+SUMMARY:WACV 2028 Round 1 Paper Registration 마감 (tentative)
 DESCRIPTION:Tentative — based on WACV 2027 pattern (Round 1 Paper Registration: 2026-06-18 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 1 Paper Registration (tentative) — 7 days
+DESCRIPTION:WACV 2028 Round 1 Paper Registration 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 1 Paper Registration (tentative) — 1 day
+DESCRIPTION:WACV 2028 Round 1 Paper Registration 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:20c552581ed20a75@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270611
 DTEND;VALUE=DATE:20270612
 SUMMARY:WACV 2028 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:aef6a8dce94c4ce3@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:df394f0baa1ba75c@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270625
 DTEND;VALUE=DATE:20270626
-SUMMARY:WACV 2028 Round 1 Paper (tentative)
+SUMMARY:WACV 2028 Round 1 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on WACV 2027 pattern (Round 1 Paper Submission: 2026-06-25 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 1 Paper (tentative) — 7 days
+DESCRIPTION:WACV 2028 Round 1 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 1 Paper (tentative) — 1 day
+DESCRIPTION:WACV 2028 Round 1 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:67774ed957f39b9a@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:8df15c4343c805d0@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270725
 DTEND;VALUE=DATE:20270726
-SUMMARY:AAAI 2028 Abstract (tentative)
+SUMMARY:AAAI 2028 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on AAAI 2026 pattern (Abstract submission deadline: 2025-07-25 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2028 Abstract (tentative) — 7 days
+DESCRIPTION:AAAI 2028 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2028 Abstract (tentative) — 1 day
+DESCRIPTION:AAAI 2028 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:8c2d5c9103e3e565@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270718
 DTEND;VALUE=DATE:20270719
 SUMMARY:AAAI 2028 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:66df25cfd416b4aa@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:37f4b9d16fb236b4@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270801
 DTEND;VALUE=DATE:20270802
-SUMMARY:AAAI 2028 Paper (tentative)
+SUMMARY:AAAI 2028 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on AAAI 2026 pattern (Paper submission deadline: 2025-08-01 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2028 Paper (tentative) — 7 days
+DESCRIPTION:AAAI 2028 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2028 Paper (tentative) — 1 day
+DESCRIPTION:AAAI 2028 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:da1fc13783f49183@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:391ff87e389e3f35@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270804
 DTEND;VALUE=DATE:20270805
-SUMMARY:AAAI 2028 Supplementary material and code (tentative)
+SUMMARY:AAAI 2028 Supplementary material and code 마감 (tentative)
 DESCRIPTION:Tentative — based on AAAI 2026 pattern (Supplementary material and code deadline: 2025-08-04 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2028 Supplementary material and code (tentative) — 7 days
+DESCRIPTION:AAAI 2028 Supplementary material and code 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:AAAI 2028 Supplementary material and code (tentative) — 1 day
+DESCRIPTION:AAAI 2028 Supplementary material and code 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:a8fa18ecf25e1a78@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:0d9e2833291757b4@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270820
 DTEND;VALUE=DATE:20270821
-SUMMARY:WACV 2028 Round 2 New Paper Registration (tentative)
+SUMMARY:WACV 2028 Round 2 New Paper Registration 마감 (tentative)
 DESCRIPTION:Tentative — based on WACV 2027 pattern (Round 2 New Paper Registration: 2026-08-20 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 2 New Paper Registration (tentative) — 7 days
+DESCRIPTION:WACV 2028 Round 2 New Paper Registration 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 2 New Paper Registration (tentative) — 1 day
+DESCRIPTION:WACV 2028 Round 2 New Paper Registration 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:7cbb793acf69d31a@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:4a6423721c3d467d@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270827
 DTEND;VALUE=DATE:20270828
-SUMMARY:WACV 2028 Round 2 Papers (tentative)
+SUMMARY:WACV 2028 Round 2 Papers 마감 (tentative)
 DESCRIPTION:Tentative — based on WACV 2027 pattern (Round 2 Paper Submissions: 2026-08-27 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 2 Papers (tentative) — 7 days
+DESCRIPTION:WACV 2028 Round 2 Papers 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 2 Papers (tentative) — 1 day
+DESCRIPTION:WACV 2028 Round 2 Papers 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:a95f4e9674f6f09d@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:4251a2fc7cfba62c@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270828
 DTEND;VALUE=DATE:20270829
-SUMMARY:3DV 2028 Paper (tentative)
+SUMMARY:3DV 2028 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on 3DV 2027 pattern (paper: 2026-08-28 America/Los_Angeles). Verify on official site. Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2028 Paper (tentative) — 7 days
+DESCRIPTION:3DV 2028 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2028 Paper (tentative) — 1 day
+DESCRIPTION:3DV 2028 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:820251997f243640@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270821
 DTEND;VALUE=DATE:20270822
 SUMMARY:3DV 2028 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:83f433e8f609b523@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:c78dfeb683c1a6cd@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270829
 DTEND;VALUE=DATE:20270830
-SUMMARY:WACV 2028 Round 2 Supplemental Material (tentative)
+SUMMARY:WACV 2028 Round 2 Supplemental Material 마감 (tentative)
 DESCRIPTION:Tentative — based on WACV 2027 pattern (Round 2 Supplemental Material: 2026-08-29 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 2 Supplemental Material (tentative) — 7 days
+DESCRIPTION:WACV 2028 Round 2 Supplemental Material 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:WACV 2028 Round 2 Supplemental Material (tentative) — 1 day
+DESCRIPTION:WACV 2028 Round 2 Supplemental Material 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:daf4d34b19fa23d4@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:d9f74ffb64f8ed1f@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270904
 DTEND;VALUE=DATE:20270905
-SUMMARY:3DV 2028 Supplementary (tentative)
+SUMMARY:3DV 2028 Supplementary 마감 (tentative)
 DESCRIPTION:Tentative — based on 3DV 2027 pattern (supplementary: 2026-09-04 America/Los_Angeles). Verify on official site. Window start estimated (deadline − 7d)\; no official open date.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2028 Supplementary (tentative) — 7 days
+DESCRIPTION:3DV 2028 Supplementary 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:3DV 2028 Supplementary (tentative) — 1 day
+DESCRIPTION:3DV 2028 Supplementary 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:5456e4b438b02cd3@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:0ec4d38b5f8ca7d9@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270915
 DTEND;VALUE=DATE:20270916
-SUMMARY:ICRA 2028 Paper (tentative)
+SUMMARY:ICRA 2028 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on ICRA 2026 pattern (Paper Submission: 2025-09-15 23:59:59 PST). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ICRA 2028 Paper (tentative) — 7 days
+DESCRIPTION:ICRA 2028 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ICRA 2028 Paper (tentative) — 1 day
+DESCRIPTION:ICRA 2028 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c4e66e4f95d76f35@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20270908
 DTEND;VALUE=DATE:20270909
 SUMMARY:ICRA 2028 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:d4f49a8269ab65e3@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:7a85e8368599d3ba@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20271107
 DTEND;VALUE=DATE:20271108
-SUMMARY:CVPR 2028 Abstract (tentative)
+SUMMARY:CVPR 2028 Abstract 마감 (tentative)
 DESCRIPTION:Tentative — based on CVPR 2026 pattern (Abstract Submission: 2025-11-07 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2028 Abstract (tentative) — 7 days
+DESCRIPTION:CVPR 2028 Abstract 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2028 Abstract (tentative) — 1 day
+DESCRIPTION:CVPR 2028 Abstract 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7f9747054c56a31f@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20271031
 DTEND;VALUE=DATE:20271101
 SUMMARY:CVPR 2028 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:f166dadfc6ec9b10@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:a2fc5f7422ff5d0f@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20271113
 DTEND;VALUE=DATE:20271114
-SUMMARY:CVPR 2028 Paper (tentative)
+SUMMARY:CVPR 2028 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on CVPR 2026 pattern (Paper Submission: 2025-11-13 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2028 Paper (tentative) — 7 days
+DESCRIPTION:CVPR 2028 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2028 Paper (tentative) — 1 day
+DESCRIPTION:CVPR 2028 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:83e3f33e69a5358b@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:2a638c55aae4e890@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20271120
 DTEND;VALUE=DATE:20271121
-SUMMARY:CVPR 2028 Supplementary Materials (tentative)
+SUMMARY:CVPR 2028 Supplementary Materials 마감 (tentative)
 DESCRIPTION:Tentative — based on CVPR 2026 pattern (Supplementary Materials: 2025-11-20 23:59:59 AoE). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2028 Supplementary Materials (tentative) — 7 days
+DESCRIPTION:CVPR 2028 Supplementary Materials 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:CVPR 2028 Supplementary Materials (tentative) — 1 day
+DESCRIPTION:CVPR 2028 Supplementary Materials 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:9bea42c91e107dfa@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:fc318f07c9f7e4f1@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280115
 DTEND;VALUE=DATE:20280116
-SUMMARY:SIGGRAPH 2028 Technical Papers form (tentative)
+SUMMARY:SIGGRAPH 2028 Technical Papers form 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Technical Papers submission form deadline: 2026-01-15 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Technical Papers form (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2028 Technical Papers form 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Technical Papers form (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2028 Technical Papers form 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fa549413d90703da@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280108
 DTEND;VALUE=DATE:20280109
 SUMMARY:SIGGRAPH 2028 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:53810fe69caf72fa@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:8f8da1086ab6a602@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280122
 DTEND;VALUE=DATE:20280123
-SUMMARY:SIGGRAPH 2028 Technical Papers (tentative)
+SUMMARY:SIGGRAPH 2028 Technical Papers 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Technical Papers deadline: 2026-01-22 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Technical Papers (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2028 Technical Papers 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Technical Papers (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2028 Technical Papers 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:34833f0f65ef9cbb@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:552591de61f85c46@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280123
 DTEND;VALUE=DATE:20280124
-SUMMARY:SIGGRAPH 2028 Upload and conflicts (tentative)
+SUMMARY:SIGGRAPH 2028 Upload and conflicts 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Upload and conflicts deadline: 2026-01-23 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Upload and conflicts (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2028 Upload and conflicts 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Upload and conflicts (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2028 Upload and conflicts 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:f14c08f774b86176@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:00341de059e76576@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280127
 DTEND;VALUE=DATE:20280128
-SUMMARY:SIGGRAPH 2028 Technical Workshops (tentative)
+SUMMARY:SIGGRAPH 2028 Technical Workshops 마감 (tentative)
 DESCRIPTION:Tentative — based on SIGGRAPH 2026 pattern (Technical Workshops deadline: 2026-01-27 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Technical Workshops (tentative) — 7 days
+DESCRIPTION:SIGGRAPH 2028 Technical Workshops 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:SIGGRAPH 2028 Technical Workshops (tentative) — 1 day
+DESCRIPTION:SIGGRAPH 2028 Technical Workshops 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:623565472d0538f7@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:c426e2612354e774@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280226
 DTEND;VALUE=DATE:20280227
-SUMMARY:ECCV 2028 Paper Registration (tentative)
+SUMMARY:ECCV 2028 Paper Registration 마감 (tentative)
 DESCRIPTION:Tentative — based on ECCV 2026 pattern (Paper Registration: 2026-02-26 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ECCV 2028 Paper Registration (tentative) — 7 days
+DESCRIPTION:ECCV 2028 Paper Registration 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ECCV 2028 Paper Registration (tentative) — 1 day
+DESCRIPTION:ECCV 2028 Paper Registration 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:bf16a491e8281fb6@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280219
 DTEND;VALUE=DATE:20280220
 SUMMARY:ECCV 2028 접수 시작 (tentative)
 DESCRIPTION:Estimated open (deadline − 7d)\; no official open date.
 END:VEVENT
 BEGIN:VEVENT
-UID:44b18e148f8916e4@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:e95afd26a8fa33ef@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280304
 DTEND;VALUE=DATE:20280305
-SUMMARY:ECCV 2028 Paper (tentative)
+SUMMARY:ECCV 2028 Paper 마감 (tentative)
 DESCRIPTION:Tentative — based on ECCV 2026 pattern (Paper Submission: 2026-03-05 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ECCV 2028 Paper (tentative) — 7 days
+DESCRIPTION:ECCV 2028 Paper 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ECCV 2028 Paper (tentative) — 1 day
+DESCRIPTION:ECCV 2028 Paper 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:f6a97dfd51a6dcf3@ai-conf-deadlines
-DTSTAMP:20260604T073340Z
+UID:b62e49d57a5b5b4f@ai-conf-deadlines
+DTSTAMP:20260608T144103Z
 DTSTART;VALUE=DATE:20280311
 DTEND;VALUE=DATE:20280312
-SUMMARY:ECCV 2028 Supplemental Materials (tentative)
+SUMMARY:ECCV 2028 Supplemental Materials 마감 (tentative)
 DESCRIPTION:Tentative — based on ECCV 2026 pattern (Supplemental Materials: 2026-03-12 22:00:00 UTC). Verify on official site when announced. Window start estimated (deadline − 7d)\; official open date unknown.
 BEGIN:VALARM
 TRIGGER:-P7D
 ACTION:DISPLAY
-DESCRIPTION:ECCV 2028 Supplemental Materials (tentative) — 7 days
+DESCRIPTION:ECCV 2028 Supplemental Materials 마감 (tentative) — 7 days
 END:VALARM
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:ECCV 2028 Supplemental Materials (tentative) — 1 day
+DESCRIPTION:ECCV 2028 Supplemental Materials 마감 (tentative) — 1 day
 END:VALARM
 END:VEVENT
 END:VCALENDAR
