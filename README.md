@@ -25,8 +25,9 @@ AI/CV/Graphics 학회 제출 마감 자동 캘린더.
 - Paper 제출
 - Supplementary 제출
 - (WACV의 경우) Paper Registration
+- **학회 개최 일정**: 본 행사 `개최 시작` / `개최 종료` (각각 별도 all-day 이벤트, KST)
 
-부가 트랙(art papers, posters, workshop proposals 등)은 제외합니다.
+부가 트랙(art papers, posters, workshop proposals 등)은 제외합니다. 워크숍/튜토리얼 개최일은 분리된 형태로 공개되지 않아(대개 'Workshops & Tutorials'로 묶여 자유 텍스트에만 존재) 별도 이벤트로 넣지 않고, 본 행사 시작·종료만 다룹니다.
 
 ## 구독 방법
 

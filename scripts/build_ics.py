@@ -25,7 +25,7 @@ import re
 import sys
 import urllib.request
 import urllib.error
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import yaml
@@ -216,13 +216,21 @@ OUTPUT_PATH = Path(__file__).resolve().parent.parent / "docs" / "deadlines.ics"
 # ---------------------------------------------------------------------------
 
 def fetch_yaml(conf_id: str):
+    cache = fetch_yaml._cache
+    if conf_id in cache:
+        return cache[conf_id]
     url = f"{RAW_BASE}/{conf_id}.yml"
     try:
         with urllib.request.urlopen(url, timeout=30) as r:
-            return yaml.safe_load(r.read())
+            data = yaml.safe_load(r.read())
     except urllib.error.HTTPError as e:
         print(f"  [warn] {conf_id}: HTTP {e.code}", file=sys.stderr)
-        return None
+        data = None
+    cache[conf_id] = data
+    return data
+
+
+fetch_yaml._cache = {}
 
 
 def parse_deadline_dt(date_str: str, tz: str) -> datetime:
@@ -703,6 +711,51 @@ def collect_from_extras(now_utc: datetime):
     return events
 
 
+def _coerce_date(val):
+    """The upstream YAML's start/end is either a parsed date object (bare
+    `2026-06-03`) or a 'YYYY-MM-DD' string (quoted '2026-06-03'). Normalize to a
+    date, or None if absent/unparseable."""
+    if val is None:
+        return None
+    if isinstance(val, datetime):
+        return val.date()
+    if isinstance(val, date):
+        return val
+    try:
+        return datetime.strptime(str(val).strip(), "%Y-%m-%d").date()
+    except Exception:
+        return None
+
+
+def collect_conference_dates(now_utc: datetime):
+    """Two all-day markers per cycle — opening day (start) and closing day
+    (end) — from the upstream YAML's structured start/end. Only the main
+    conference span is emitted: workshop/tutorial day splits aren't reliably
+    published (when present they're lumped as 'Workshops & Tutorials' in free
+    text), so they're intentionally omitted rather than guessed. The dates are
+    the venue's local calendar dates, shown as-is on the KST all-day calendar.
+    Returns (title, day, description, reminders)."""
+    today = now_utc.astimezone(KST).date()
+    markers = []
+    for conf_id, display in INTEREST.items():
+        data = fetch_yaml(conf_id)
+        if not data:
+            continue
+        for cycle in data:
+            year = cycle.get("year")
+            link = cycle.get("link", "")
+            src = f"Source: huggingface/ai-deadlines ({link})"
+            start_d = _coerce_date(cycle.get("start"))
+            end_d = _coerce_date(cycle.get("end"))
+            if start_d and start_d >= today:
+                markers.append((f"{display} {year} 개최 시작", start_d,
+                                f"{display} {year} conference opening day. {src}", True))
+            if end_d and end_d >= today:
+                markers.append((f"{display} {year} 개최 종료", end_d,
+                                f"{display} {year} conference closing day. {src}", False))
+    return markers
+
+
 def build_ics():
     now_utc = datetime.now(timezone.utc)
     events = collect_from_ai_deadlines(now_utc) + collect_from_extras(now_utc)
@@ -727,7 +780,7 @@ def build_ics():
         "METHOD:PUBLISH",
         "X-WR-CALNAME:Conference Deadlines",
         "X-WR-TIMEZONE:Asia/Seoul",
-        f"X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated {now_utc.strftime('%Y-%m-%d %H:%M UTC')}. All-day events in KST: a '시작' (open) marker per cycle + a deadline marker per type. (tentative) = estimated from previous cycle.",
+        f"X-WR-CALDESC:AI/CV/Graphics deadlines. Auto-updated {now_utc.strftime('%Y-%m-%d %H:%M UTC')}. All-day events in KST: a '시작' (open) marker per cycle + a deadline marker per type + '개최 시작/종료' conference opening/closing days. (tentative) = estimated from previous cycle.",
     ]
 
     # Each deadline → one all-day event on its KST deadline date. The submission
@@ -761,6 +814,11 @@ def build_ics():
                      if start_est else "Submission window opens.")
             lines.append(make_allday_vevent(otitle, odate, odesc, now_utc, reminders=False))
             summary.append((odate, "o", otitle))
+
+    # Conference opening/closing day markers (main span only).
+    for title, day, desc, reminders in collect_conference_dates(now_utc):
+        lines.append(make_allday_vevent(title, day, desc, now_utc, reminders=reminders))
+        summary.append((day, "C", title))
 
     lines.append("END:VCALENDAR")
     content = "\n".join(lines) + "\n"
