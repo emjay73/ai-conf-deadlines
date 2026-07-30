@@ -116,10 +116,12 @@ OFFICIAL_SOURCES = {
     # *.cc platform — "Label: Date" call-for-papers pages.
     "neurips": {"url": lambda year: f"https://neurips.cc/Conferences/{year}/CallForPapers"},
     "icml":    {"url": lambda year: f"https://icml.cc/Conferences/{year}/CallForPapers"},
-    # ICLR deliberately NOT added: its CFP lists deadlines as bare "Sep 19" with
-    # no year, and the real deadline falls in the conference's PRIOR calendar
-    # year — the generic parser can't infer that, so it could never pass the
-    # sanity check anyway. Left to the tentative estimate.
+    # ICLR's Dates page labels deadlines with an apostrophe year ("Sep 18 '26"),
+    # which _DATE_RE parses. If a future cycle's page ever drops the year, the
+    # bare date gets the conference year (wrong by one — deadlines fall in the
+    # PRIOR calendar year), fails the sanity window, and we safely keep the
+    # tentative estimate.
+    "iclr":    {"url": lambda year: f"https://iclr.cc/Conferences/{year}/Dates"},
     # thecvf / ecva — "Label Date" Dates pages.
     "cvpr":    {"url": lambda year: f"https://cvpr.thecvf.com/Conferences/{year}/Dates"},
     "iccv":    {"url": lambda year: f"https://iccv.thecvf.com/Conferences/{year}/Dates"},
@@ -162,6 +164,7 @@ _KEYWORD_RULES = [
     ("paper submission deadline",  ("paper", "Paper")),          # CVPR
     ("main conference submission", ("paper", "Paper")),          # ECCV
     ("submission and supplementary", ("paper", "Paper")),        # ICCV combined line
+    ("paper deadline",             ("paper", "Paper")),          # ICLR Dates page
     ("supplementary material",     ("supplementary", "Supplementary")),
     ("supplemental material",      ("supplementary", "Supplementary")),
 ]
@@ -608,7 +611,11 @@ def collect_from_ai_deadlines(now_utc: datetime):
                     f"Verify on official site when announced."
                 )
                 # Hybrid: trust the official date if it's within the sanity window.
+                # Upstream sometimes types the paper deadline as "submission"
+                # (e.g. ICLR); the parser only emits "paper", so map across.
                 off = official.get(dl_type)
+                if off is None and dl_type == "submission":
+                    off = official.get("paper")
                 if off:
                     off_short, off_date, off_tz = off
                     try:
