@@ -165,6 +165,7 @@ _KEYWORD_RULES = [
     ("main conference submission", ("paper", "Paper")),          # ECCV
     ("submission and supplementary", ("paper", "Paper")),        # ICCV combined line
     ("paper deadline",             ("paper", "Paper")),          # ICLR Dates page
+    ("submission deadline",        ("paper", "Paper")),          # CVPR 2027 (bare, under "Paper Submissions")
     ("supplementary material",     ("supplementary", "Supplementary")),
     ("supplemental material",      ("supplementary", "Supplementary")),
 ]
@@ -174,6 +175,13 @@ _NEG_CONTEXT = ("opens", "open for", "notification", "feedback", "reviews",
                 "rebuttal", "decision", "decisions", "camera", "acceptance",
                 "early registration", "cancellation", "final paper",
                 "final version", "results released", "job board", "careers")
+
+# Generic keywords that belong to another deadline when qualified by one of
+# these words just before them (e.g. "Abstract Submission Deadline").
+_KW_PREFIX_EXCLUDE = {
+    "submission deadline": ("abstract", "supplement", "workshop", "tutorial",
+                            "demo", "challenge", "late-breaking"),
+}
 
 # Max chars allowed between a keyword and the date it classifies.
 _MAX_DATE_GAP = 70
@@ -371,6 +379,9 @@ def heuristic_parse_deadlines(text: str, year=None, layout="label_first"):
             # "paper registration" legitimately contains the _NEG word
             # "registration" — exempt it.
             if any(neg in ctx for neg in _NEG_CONTEXT) and "paper registration" not in ctx:
+                continue
+            prefix = low[max(0, idx - 25):idx]
+            if any(p in prefix for p in _KW_PREFIX_EXCLUDE.get(kw, ())):
                 continue
             d = _pick_date(dates, idx, idx + len(kw), layout)
             if d:
