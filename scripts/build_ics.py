@@ -4,7 +4,7 @@ Build deadlines.ics from huggingface/ai-deadlines repo + official sites + estima
 Strategy:
 1. Fetch YAML files for confirmed conferences from huggingface/ai-deadlines.
 2. For each interest conference, extract deadlines of type {abstract, paper, supplementary, submission}.
-3. Only include deadlines AFTER today.
+3. Keep deadlines from HISTORY_START on (past ones stay on the calendar).
 4. For the NEXT cycle (not yet in upstream), HYBRID-observe the conference's
    official page (OFFICIAL_SOURCES): a parsed date within SANITY_WINDOW_DAYS of
    the +1-cycle estimate is trusted (confirmed); otherwise fall back to the
@@ -127,6 +127,26 @@ OFFICIAL_SOURCES = {
     "iccv":    {"url": lambda year: f"https://iccv.thecvf.com/Conferences/{year}/Dates"},
     "eccv":    {"url": lambda year: f"https://eccv.ecva.net/Conferences/{year}/Dates"},
 }
+
+# Next-cycle dates published where no scraper reaches (verified by hand).
+# (conf_id, year, short label) → (date, tz, source). Emitted as confirmed and
+# take precedence over both the pattern estimate and OFFICIAL_SOURCES.
+MANUAL_DEADLINES = {
+    # IEEE RAS calendar: "Mar 1, 2027 Paper submission deadline: IROS" — no
+    # time/zone published. AoE follows IROS 2026; AoE and PT both land on the
+    # same KST all-day date (Mar 1), so the choice doesn't move the event.
+    ("iros", 2027, "Paper"): (
+        "2027-03-01 23:59:59", "AoE",
+        "IEEE RAS calendar (https://www.ieee-ras.org/event/call-for-papers-paper-"
+        "submission-deadline-iros-2027-ieee-rsj-international-conference-on-"
+        "intelligent-robots-and-systems-iros-27403-0/)"),
+}
+
+# Past events stay on the calendar back to this date instead of disappearing
+# once they pass. Earlier history from upstream is still left out.
+HISTORY_START = date(2026, 1, 1)
+HISTORY_START_UTC = datetime(HISTORY_START.year, HISTORY_START.month,
+                             HISTORY_START.day, tzinfo=timezone.utc)
 
 # A parsed official date must be within this many days of the +1-cycle estimate
 # to be trusted. Conferences drift a few weeks year to year; 75d is generous
@@ -549,7 +569,7 @@ def collect_from_ai_deadlines(now_utc: datetime):
                     continue
                 short = _shorten_label(label, dl_type)
                 confirmed_keys.add((year, dl_type, short))
-                if end_dt <= now_utc:
+                if end_dt < HISTORY_START_UTC:
                     continue
                 start_dt, start_est = period_start(end_dt, None)
                 desc = f"{label}. Source: huggingface/ai-deadlines ({link})"
@@ -627,7 +647,13 @@ def collect_from_ai_deadlines(now_utc: datetime):
                 off = official.get(dl_type)
                 if off is None and dl_type == "submission":
                     off = official.get("paper")
-                if off:
+                manual = MANUAL_DEADLINES.get((conf_id, target_year, short))
+                if manual:
+                    m_date, m_tz, m_src = manual
+                    end_dt, is_tent = parse_deadline_dt(m_date, m_tz), False
+                    src_desc = f"{short} deadline. Source: {m_src} (entered manually)"
+                    confirmed_keys.add((target_year, dl_type, short))
+                elif off:
                     off_short, off_date, off_tz = off
                     try:
                         off_dt = parse_deadline_dt(off_date, off_tz)
@@ -646,7 +672,7 @@ def collect_from_ai_deadlines(now_utc: datetime):
                 if dl_type == "abstract":
                     abstract_end, abstract_tent = end_dt, is_tent
 
-                if end_dt <= now_utc:
+                if end_dt < HISTORY_START_UTC:
                     continue
 
                 start_dt, start_est = period_start(end_dt, sub_open_dt)
@@ -661,7 +687,7 @@ def collect_from_ai_deadlines(now_utc: datetime):
 
             # Author-registration window: registration opens → abstract deadline.
             reg_open = official.get("__reg_open__")
-            if reg_open and abstract_end is not None and abstract_end > now_utc:
+            if reg_open and abstract_end is not None and abstract_end >= HISTORY_START_UTC:
                 try:
                     reg_start = _open_to_dt(reg_open)
                 except Exception:
@@ -690,7 +716,7 @@ def collect_from_extras(now_utc: datetime):
                 end_dt = parse_deadline_dt(date_str, tz)
             except Exception:
                 continue
-            if end_dt <= now_utc:
+            if end_dt < HISTORY_START_UTC:
                 continue
             title = f"{display} {latest_year} {dl_type.capitalize()}"
             # Mark supplementary as tentative if it was a guess
@@ -715,7 +741,7 @@ def collect_from_extras(now_utc: datetime):
             except Exception:
                 continue
             end_dt = pattern_dt + timedelta(days=365)
-            if end_dt <= now_utc:
+            if end_dt < HISTORY_START_UTC:
                 continue
             start_dt, start_est = period_start(end_dt, None)
             desc = (
@@ -753,7 +779,6 @@ def collect_conference_dates(now_utc: datetime):
     text), so they're intentionally omitted rather than guessed. The dates are
     the venue's local calendar dates, shown as-is on the KST all-day calendar.
     Returns (title, day, description, reminders)."""
-    today = now_utc.astimezone(KST).date()
     markers = []
     for conf_id, display in INTEREST.items():
         data = fetch_yaml(conf_id)
@@ -765,10 +790,10 @@ def collect_conference_dates(now_utc: datetime):
             src = f"Source: huggingface/ai-deadlines ({link})"
             start_d = _coerce_date(cycle.get("start"))
             end_d = _coerce_date(cycle.get("end"))
-            if start_d and start_d >= today:
+            if start_d and start_d >= HISTORY_START:
                 markers.append((f"{display} {year} 개최 시작", start_d,
                                 f"{display} {year} conference opening day. {src}", True))
-            if end_d and end_d >= today:
+            if end_d and end_d >= HISTORY_START:
                 markers.append((f"{display} {year} 개최 종료", end_d,
                                 f"{display} {year} conference closing day. {src}", False))
     return markers
